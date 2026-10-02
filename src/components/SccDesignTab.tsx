@@ -3,6 +3,7 @@ import { GradeType, ExposureCondition, AggregateSize, SandZone } from '../types/
 import { TRANSLATIONS, Language } from '../utils/translations';
 import { STD_DEV_TABLE, FACTOR_X_TABLE, DURABILITY_LIMITS } from '../utils/concreteCalculations';
 import { Sparkles, Droplets, CheckCircle2, AlertTriangle, Layers, Copy, Check, Info } from 'lucide-react';
+import { SccFlowGraphic } from './SccFlowGraphic';
 
 interface SccDesignTabProps {
   lang: Language;
@@ -265,6 +266,9 @@ export const SccDesignTab: React.FC<SccDesignTabProps> = ({ lang }) => {
             </select>
           </div>
         </div>
+
+        {/* SCC Slump-Flow Graphic Simulation */}
+        <SccFlowGraphic flowClass={slumpFlowClass} lang={lang} />
       </div>
 
       {/* SCC Mix Parameters & Powder Proportioning (Clauses 8.1, 8.3 & Annex E) */}

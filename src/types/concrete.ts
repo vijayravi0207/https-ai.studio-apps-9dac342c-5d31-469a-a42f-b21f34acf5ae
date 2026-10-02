@@ -141,3 +141,21 @@ export interface CubeTestRecord {
   isValid: boolean;
   status: 'Pass' | 'Fail' | 'Check Variation';
 }
+
+export interface MixReportMetadata {
+  clientName: string;
+  projectSite: string;
+  preparedBy: string;
+  checkedBy: string;
+  approvedBy?: string;
+  reportRef?: string;
+  reportDate?: string;
+}
+
+export const DEFAULT_REPORT_METADATA: MixReportMetadata = {
+  clientName: 'M/s Greenfield Infrastructure Ltd',
+  projectSite: 'Residential High-Rise Tower Block-A, Site No. 42',
+  preparedBy: 'Er. K. Vijay, B.E. (Civil QC Engineer)',
+  checkedBy: 'Er. R. Sundaram, M.E. (Chief Structural Engineer)',
+  approvedBy: 'Er. M. Ramanathan (Project Director / Client Rep)',
+};

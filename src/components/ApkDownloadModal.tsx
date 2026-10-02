@@ -62,7 +62,7 @@ export const ApkDownloadModal: React.FC<ApkDownloadModalProps> = ({
       });
 
       setDownloadProgress(65);
-      setDownloadStatus(lang === 'ta' ? '3.0 MB APK கோப்பு பெறப்படுகிறது...' : 'Receiving 3.0 MB APK package...');
+      setDownloadStatus(lang === 'ta' ? '4.3 MB APK கோப்பு பெறப்படுகிறது...' : 'Receiving 4.3 MB signed APK package...');
 
       const blob = await response.blob();
       setDownloadProgress(90);
@@ -143,7 +143,7 @@ export const ApkDownloadModal: React.FC<ApkDownloadModalProps> = ({
                 </h3>
               </div>
               <span className="text-[11px] font-mono text-emerald-300 font-bold bg-emerald-950/80 px-2 py-1 rounded-lg border border-emerald-800/60">
-                Native App · Signed
+                Signed APK · 4.3 MB
               </span>
             </div>
 

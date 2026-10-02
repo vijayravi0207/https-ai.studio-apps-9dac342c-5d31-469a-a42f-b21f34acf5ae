@@ -10,7 +10,8 @@ function apkServePlugin(): Plugin {
     name: 'apk-serve-plugin',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (req.url === '/ConcreteMixDesignPro.apk' || req.url === '/api/download-apk') {
+        const cleanUrl = req.url ? req.url.split('?')[0] : '';
+        if (cleanUrl === '/ConcreteMixDesignPro.apk' || cleanUrl === '/api/download-apk') {
           const apkPath = path.resolve(__dirname, 'public/ConcreteMixDesignPro.apk');
           if (fs.existsSync(apkPath)) {
             const stat = fs.statSync(apkPath);
@@ -31,6 +32,7 @@ function apkServePlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [
       apkServePlugin(),
       react(),
@@ -86,6 +88,8 @@ export default defineConfig(() => {
       },
     },
     server: {
+      port: 3000,
+      host: '0.0.0.0',
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',

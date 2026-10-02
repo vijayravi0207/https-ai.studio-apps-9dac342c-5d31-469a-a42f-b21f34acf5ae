@@ -10,10 +10,12 @@ import {
   SandZone, 
   SiteControl, 
   PlacingMethod, 
-  MineralAdmixtureType 
+  MineralAdmixtureType,
+  MixReportMetadata
 } from '../types/concrete';
 import { calculateMixDesign, DURABILITY_LIMITS } from '../utils/concreteCalculations';
 import { TRANSLATIONS, Language } from '../utils/translations';
+import { SlumpConeGraphic } from './SlumpConeGraphic';
 import { 
   Sparkles, 
   CheckCircle2, 
@@ -25,7 +27,11 @@ import {
   Droplet, 
   ChevronDown, 
   ChevronUp, 
-  Info 
+  Info,
+  Building2,
+  MapPin,
+  UserCheck,
+  FileText
 } from 'lucide-react';
 
 interface DesignMixTabProps {
@@ -33,6 +39,8 @@ interface DesignMixTabProps {
   setInputs: React.Dispatch<React.SetStateAction<MixDesignInputs>>;
   outputs: MixDesignOutputs;
   lang: Language;
+  metadata: MixReportMetadata;
+  setMetadata: React.Dispatch<React.SetStateAction<MixReportMetadata>>;
   onOpenReport: () => void;
 }
 
@@ -41,6 +49,8 @@ export const DesignMixTab: React.FC<DesignMixTabProps> = ({
   setInputs,
   outputs,
   lang,
+  metadata,
+  setMetadata,
   onOpenReport,
 }) => {
   const t = TRANSLATIONS[lang];
@@ -331,7 +341,7 @@ export const DesignMixTab: React.FC<DesignMixTabProps> = ({
             {/* Step 6 */}
             <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
               <div className="font-bold text-amber-300 mb-1">
-                Step 6: Absolute Volume Calculations per 1 m³ (Cl. 5.7)
+                Step 6: Absolute Volume Calculations per 1 m³ (Cl. 5.6)
               </div>
               <p>a) Volume of Entrapped Air = {outputs.airContentVolume} m³ (Table 3)</p>
               <p>b) Volume of Cement = {outputs.cementContent} / ({inputs.specificGravityCement} × 1000) = {outputs.volCement} m³</p>
@@ -345,8 +355,47 @@ export const DesignMixTab: React.FC<DesignMixTabProps> = ({
               <p className="text-amber-400 font-bold mt-1">
                 Volume of All-in Aggregate = 1 - Air - Paste = {outputs.volTotalAggregate} m³
               </p>
-              <p>Mass of CA = {outputs.volTotalAggregate} × {outputs.coarseAggFinalVolumeRatio} × {inputs.specificGravityCA} × 1000 = {outputs.coarseAggSSD} kg</p>
-              <p>Mass of FA = {outputs.volTotalAggregate} × {outputs.fineAggFinalVolumeRatio} × {inputs.specificGravityFA} × 1000 = {outputs.fineAggSSD} kg</p>
+              <p>Mass of CA (SSD) = {outputs.volTotalAggregate} × {outputs.coarseAggFinalVolumeRatio} × {inputs.specificGravityCA} × 1000 = {outputs.coarseAggSSD} kg/m³</p>
+              <p>Mass of FA (SSD) = {outputs.volTotalAggregate} × {outputs.fineAggFinalVolumeRatio} × {inputs.specificGravityFA} × 1000 = {outputs.fineAggSSD} kg/m³</p>
+            </div>
+
+            {/* Step 7 */}
+            <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div className="font-bold text-amber-300 mb-1">
+                Step 7: Final SSD Mix Proportions & Normalized Ratio
+              </div>
+              <p>Cement: {outputs.cementContent} kg/m³ | Water: {outputs.finalWater} kg/m³</p>
+              <p>Fine Aggregate (Sand): {outputs.fineAggSSD} kg/m³ | Coarse Aggregate: {outputs.coarseAggSSD} kg/m³</p>
+              <p className="text-emerald-400 font-bold mt-1">
+                Design Mix Ratio = {outputs.ratioString} (Cement : Sand : Aggregate)
+              </p>
+            </div>
+
+            {/* Step 8 */}
+            <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div className="font-bold text-amber-300 mb-1">
+                Step 8: Field Moisture & Absorption Adjustments (Cl. 5.7)
+              </div>
+              <p>Adjusted Wet Sand to weigh = {outputs.wetAggFA} kg/m³</p>
+              <p>Adjusted Wet Aggregate to weigh = {outputs.wetAggCA} kg/m³</p>
+              <p>Free surface water from aggregates = {outputs.freeWaterContributed} kg/m³</p>
+              <p className="text-blue-400 font-bold mt-1">
+                Actual Water to Add in Mixer = {outputs.actualWaterToAdd} Litres/m³
+              </p>
+            </div>
+
+            {/* Step 9 */}
+            <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div className="font-bold text-amber-300 mb-1">
+                Step 9: Site Batching Quantities (Per 50 kg Cement Bag)
+              </div>
+              <p>• Cement: 50 kg (1 Bag)</p>
+              <p>• Water to Add: {(outputs.actualWaterToAdd * 50 / outputs.cementContent).toFixed(1)} Litres</p>
+              <p>• Wet Sand: {(outputs.wetAggFA * 50 / outputs.cementContent).toFixed(1)} kg</p>
+              <p>• Wet Coarse Aggregate: {(outputs.wetAggCA * 50 / outputs.cementContent).toFixed(1)} kg</p>
+              {outputs.admixtureSSD > 0 && (
+                <p>• Chemical Admixture: {(outputs.admixtureSSD * (50 / outputs.cementContent) * 1000).toFixed(0)} ml</p>
+              )}
             </div>
           </div>
         )}
@@ -482,11 +531,13 @@ export const DesignMixTab: React.FC<DesignMixTabProps> = ({
               </select>
             </div>
 
-            {/* Workability Slump */}
-            <div>
+            {/* Workability Slump with Slump Cone Graphics directly below */}
+            <div className="col-span-1 sm:col-span-2 bg-slate-900/60 p-3.5 rounded-2xl border border-slate-700/60">
               <div className="flex justify-between items-center mb-1">
-                <label htmlFor="slump-slider" className="text-slate-300 font-medium">{t.workability}</label>
-                <span className="font-mono text-amber-400 font-bold">{inputs.workabilitySlump} mm</span>
+                <label htmlFor="slump-slider" className="text-slate-200 font-semibold">{t.workability}</label>
+                <span className="font-mono text-amber-400 font-bold text-sm bg-amber-950/80 px-2.5 py-0.5 rounded-lg border border-amber-800/60">
+                  {inputs.workabilitySlump} mm
+                </span>
               </div>
               <input
                 id="slump-slider"
@@ -498,12 +549,15 @@ export const DesignMixTab: React.FC<DesignMixTabProps> = ({
                 onChange={(e) => handleInputChange('workabilitySlump', Number(e.target.value))}
                 className="w-full accent-amber-500 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 mt-0.5">
-                <span>25mm (Shallow)</span>
-                <span>75mm (Normal)</span>
+              <div className="flex justify-between text-[10px] text-slate-400 mt-1 font-mono">
+                <span>25mm (Roads)</span>
+                <span>75mm (Beams/Slabs)</span>
                 <span>120mm (Pump)</span>
                 <span>175mm (Tremie)</span>
               </div>
+
+              {/* Slump Cone Graphics directly under the required slump input */}
+              <SlumpConeGraphic slumpMm={inputs.workabilitySlump} lang={lang} />
             </div>
 
             {/* Placing Method & Sand Zone */}
@@ -804,6 +858,90 @@ export const DesignMixTab: React.FC<DesignMixTabProps> = ({
                 <option value={0.5}>50% (20-10 mm) : 50% (10-4.75 mm) - High Strength</option>
                 <option value={0.7}>70% (20-10 mm) : 30% (10-4.75 mm)</option>
               </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Client & Project Details for PDF Report (Bottom Position) */}
+        <div className="bg-gradient-to-br from-slate-800 via-slate-800/95 to-slate-900 border-2 border-amber-500/50 rounded-2xl p-4 space-y-3 shadow-xl">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-700/70">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+                <FileText className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs md:text-sm font-bold text-white">
+                  {lang === 'ta' ? 'திட்ட & வாடிக்கையாளர் விவரங்கள் (PDF அறிக்கை)' : 'Client & Project Details (PDF Report)'}
+                </h3>
+                <p className="text-[10.5px] text-amber-300/80">
+                  {lang === 'ta' ? 'இங்கு உள்ளிடும் பெயர்கள் PDF அறிக்கையில் சேர்க்கப்படும்' : 'These names will be printed directly in the PDF report'}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={onOpenReport}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/20 transition-all cursor-pointer shrink-0"
+            >
+              <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>{lang === 'ta' ? 'PDF அறிக்கை' : 'Open PDF'}</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label className="text-slate-200 font-bold mb-1 flex items-center gap-1.5">
+                <Building2 className="w-3.5 h-3.5 text-amber-400" />
+                <span>{lang === 'ta' ? 'வாடிக்கையாளர் பெயர் (Client Name):' : 'Client Name:'}</span>
+              </label>
+              <input
+                type="text"
+                value={metadata.clientName}
+                onChange={(e) => setMetadata({ ...metadata, clientName: e.target.value })}
+                placeholder="e.g. M/s Greenfield Infrastructure Ltd"
+                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-medium focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400/50"
+              />
+            </div>
+
+            <div>
+              <label className="text-slate-200 font-bold mb-1 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                <span>{lang === 'ta' ? 'திட்ட இடம் / தளம் (Project Site):' : 'Project Site:'}</span>
+              </label>
+              <input
+                type="text"
+                value={metadata.projectSite}
+                onChange={(e) => setMetadata({ ...metadata, projectSite: e.target.value })}
+                placeholder="e.g. Residential High-Rise Tower Block-A, Site No. 42"
+                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-medium focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400/50"
+              />
+            </div>
+
+            <div>
+              <label className="text-slate-200 font-bold mb-1 flex items-center gap-1.5">
+                <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>{lang === 'ta' ? 'தயாரித்தவர் (Prepared By):' : 'Prepared By:'}</span>
+              </label>
+              <input
+                type="text"
+                value={metadata.preparedBy}
+                onChange={(e) => setMetadata({ ...metadata, preparedBy: e.target.value })}
+                placeholder="e.g. Er. K. Vijay, B.E. (Civil QC Engineer)"
+                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-medium focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400/50"
+              />
+            </div>
+
+            <div>
+              <label className="text-slate-200 font-bold mb-1 flex items-center gap-1.5">
+                <UserCheck className="w-3.5 h-3.5 text-blue-400" />
+                <span>{lang === 'ta' ? 'சரிபார்த்தவர் (Checked By):' : 'Checked By:'}</span>
+              </label>
+              <input
+                type="text"
+                value={metadata.checkedBy}
+                onChange={(e) => setMetadata({ ...metadata, checkedBy: e.target.value })}
+                placeholder="e.g. Er. R. Sundaram, M.E. (Chief Structural Engineer)"
+                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-medium focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400/50"
+              />
             </div>
           </div>
         </div>

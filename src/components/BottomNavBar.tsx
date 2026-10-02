@@ -1,8 +1,8 @@
 import React from 'react';
-import { Calculator, Sparkles, Activity, Layers, Droplets, BookCheck } from 'lucide-react';
+import { Calculator, Sparkles, Layers, Droplets, BookCheck } from 'lucide-react';
 import { TRANSLATIONS, Language } from '../utils/translations';
 
-export type ActiveTab = 'design' | 'scc' | 'lab' | 'nominal' | 'field' | 'standards';
+export type ActiveTab = 'design' | 'scc' | 'nominal' | 'field' | 'standards';
 
 interface BottomNavBarProps {
   activeTab: ActiveTab;
@@ -33,11 +33,6 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
       icon: <Sparkles className="w-4 h-4" />,
     },
     {
-      id: 'lab',
-      label: t.tabLab,
-      icon: <Activity className="w-4 h-4" />,
-    },
-    {
       id: 'nominal',
       label: t.tabNominalMix,
       icon: <Layers className="w-4 h-4" />,
@@ -56,7 +51,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
 
   return (
     <nav aria-label="Bottom Navigation" className="sticky bottom-0 z-40 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 px-1 py-1.5 shadow-lg">
-      <div className="grid grid-cols-6 items-center justify-around gap-0.5">
+      <div className="grid grid-cols-5 items-center justify-around gap-0.5">
         {navItems.map((item) => {
           const isActive = activeTab === item.id;
           return (

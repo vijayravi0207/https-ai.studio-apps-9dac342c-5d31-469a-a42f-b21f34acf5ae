@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { MixDesignInputs } from './types/concrete';
+import { MixDesignInputs, MixReportMetadata, DEFAULT_REPORT_METADATA } from './types/concrete';
 import { calculateMixDesign } from './utils/concreteCalculations';
 import { Language } from './utils/translations';
 import { AndroidFrame } from './components/AndroidFrame';
@@ -11,7 +11,6 @@ import { FieldAdjustmentTab } from './components/FieldAdjustmentTab';
 import { StandardsTab } from './components/StandardsTab';
 import { BOQTab } from './components/BOQTab';
 import { SccDesignTab } from './components/SccDesignTab';
-import { WorkabilityAnimationLab } from './components/WorkabilityAnimationLab';
 import { MixReportModal } from './components/MixReportModal';
 import { ApkDownloadModal } from './components/ApkDownloadModal';
 
@@ -55,6 +54,7 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const [inputs, setInputs] = useState<MixDesignInputs>(DEFAULT_MIX_INPUTS);
+  const [reportMetadata, setReportMetadata] = useState<MixReportMetadata>(DEFAULT_REPORT_METADATA);
 
   // Reactive calculation of outputs
   const outputs = useMemo(() => {
@@ -92,13 +92,13 @@ export default function App() {
             setInputs={setInputs}
             outputs={outputs}
             lang={lang}
+            metadata={reportMetadata}
+            setMetadata={setReportMetadata}
             onOpenReport={() => setIsReportOpen(true)}
           />
         )}
 
         {activeTab === 'scc' && <SccDesignTab lang={lang} />}
-
-        {activeTab === 'lab' && <WorkabilityAnimationLab lang={lang} />}
 
         {activeTab === 'nominal' && <NominalMixTab lang={lang} />}
 
@@ -133,6 +133,8 @@ export default function App() {
         inputs={inputs}
         outputs={outputs}
         lang={lang}
+        metadata={reportMetadata}
+        setMetadata={setReportMetadata}
       />
 
       {/* APK Download & Android Installation Modal */}

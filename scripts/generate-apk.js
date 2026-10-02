@@ -3,6 +3,16 @@ import path from 'path';
 import JSZip from 'jszip';
 
 async function buildApk() {
+  const targetApk = path.resolve('public/ConcreteMixDesignPro.apk');
+  if (fs.existsSync(targetApk)) {
+    const existingStat = fs.statSync(targetApk);
+    // If genuine signed APK exists (~550 KB with idsig), protect it
+    if (existingStat.size > 500000) {
+      console.log(`Preserving existing genuine signed APK (${existingStat.size} bytes)`);
+      return;
+    }
+  }
+
   const zip = new JSZip();
 
   // Load icons
