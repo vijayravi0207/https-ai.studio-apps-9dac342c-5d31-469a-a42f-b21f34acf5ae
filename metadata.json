@@ -1,0 +1,6 @@
+{
+  "name": "Concrete Mix Design Pro (IS 10262:2019 & IS 456)",
+  "description": "Professional Android application for concrete mix proportioning, nominal mixes, field moisture adjustments, compliance checking, and batching calculations based on IS 10262:2019 and IS 456:2000.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

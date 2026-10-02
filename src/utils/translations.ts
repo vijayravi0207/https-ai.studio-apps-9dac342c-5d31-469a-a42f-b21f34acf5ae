@@ -1,0 +1,226 @@
+export type Language = 'en' | 'ta';
+
+export const TRANSLATIONS = {
+  en: {
+    appTitle: 'Concrete Mix Design Pro',
+    appSubtitle: 'IS 10262:2019 & IS 456:2000 Civil Suite',
+    tagline: 'Code-Compliant Proportioning, Moisture Adjustments & Batching',
+    tabDesignMix: 'Design Mix',
+    tabScc: 'SCC Concrete',
+    tabLab: 'Slump & Flow',
+    tabNominalMix: 'Nominal Mix',
+    tabFieldAdj: 'Field Moisture',
+    tabStandards: 'IS 456 Codes',
+    tabBoq: 'BOQ & Batching',
+    
+    // Design Mix Form
+    sectionStipulations: '1. Mix Stipulations',
+    sectionMaterials: '2. Material Test Data',
+    sectionMineral: '3. Mineral Admixtures',
+    sectionChemical: '4. Chemical Admixtures',
+    sectionAggregates: '5. Aggregates & Grading',
+
+    grade: 'Grade of Concrete',
+    concreteType: 'Structure Type',
+    cementType: 'Cement Category & Grade',
+    exposure: 'Exposure Condition',
+    maxAggSize: 'Max Nominal Aggregate Size',
+    aggShape: 'Aggregate Shape',
+    sandZone: 'Sand Grading Zone (IS 383)',
+    workability: 'Required Slump (Workability)',
+    placingMethod: 'Method of Placing',
+    siteControl: 'Degree of Site Supervision',
+    customStdDev: 'Use Established Site Standard Deviation',
+
+    cementSg: 'Specific Gravity of Cement',
+    caSg: 'Coarse Aggregate Specific Gravity (SSD)',
+    faSg: 'Fine Aggregate Specific Gravity (SSD)',
+    caAbsorption: 'CA Water Absorption (%)',
+    faAbsorption: 'FA Water Absorption (%)',
+    caMoisture: 'CA Free Surface Moisture (%)',
+    faMoisture: 'FA Free Surface Moisture (%)',
+    coarseFraction: '20-10 mm Fraction Ratio (IS 383)',
+
+    mineralType: 'Mineral Admixture Type',
+    mineralPercent: 'Mineral Replacement (% by mass)',
+    mineralSg: 'Mineral Specific Gravity',
+    cementitiousIncrease: 'Increase Cementitious Content (%)',
+
+    useAdmix: 'Use Chemical Admixture (Plasticizer/HRWRA)',
+    admixReduction: 'Water Reduction Achieved (%)',
+    admixDosage: 'Admixture Dosage (% of cementitious)',
+    admixSg: 'Admixture Specific Gravity',
+
+    // Results
+    resultsTitle: 'Mix Design Proportions per 1 m³',
+    targetStrength: 'Target Mean Strength',
+    waterCementRatio: 'Adopted Water-Cement Ratio',
+    netWater: 'Net Mixing Water',
+    cementQuantity: 'Cement (OPC)',
+    mineralQuantity: 'Mineral Admixture',
+    fineAggQuantity: 'Fine Aggregate (Sand - SSD)',
+    coarseAggQuantity: 'Coarse Aggregate (Jalli - SSD)',
+    admixtureQuantity: 'Chemical Admixture',
+    ratioDisplay: 'Mix Ratio (Cement : Sand : Aggregate)',
+
+    fieldAdjustedResults: 'Field Batch Quantities (Moisture Adjusted)',
+    actualWaterBatch: 'Actual Water to Add in Mixer',
+    actualFaBatch: 'Adjusted Sand to Weigh',
+    actualCaBatch: 'Adjusted Aggregate to Weigh',
+    moistureNotice: 'Free water present in sand & aggregate is deducted from batch water.',
+
+    // Buttons
+    btnCalculate: 'Recalculate Proportions',
+    btnExportReport: 'Export PDF / Print Report',
+    btnCopyRatio: 'Copy Mix Ratio',
+    btnLoadPreset: 'Load Code Preset',
+    viewFrameToggle: 'Toggle Phone Frame',
+
+    // Durability badges
+    durabilityOk: 'Complies with IS 456 Table 5 Durability Requirements',
+    cementMinWarning: 'Notice: Cementitious content increased to satisfy minimum durability requirement.',
+    cementMaxWarning: 'Caution: OPC content exceeds 450 kg/m³ limit (IS 456 Clause 8.2.4.2).',
+
+    // Nominal Mix
+    nominalTitle: 'Nominal Mix Concrete (IS 456:2000 Table 9)',
+    nominalSubtitle: 'For Concrete Grades M5 to M20 (Non-Structural & Residential)',
+    selectNominalGrade: 'Select Nominal Concrete Grade',
+    nominalBagBasis: 'Batch Quantities per 50 kg Bag of Cement',
+    totalDryAgg: 'Total Dry Aggregates',
+    waterPerBag: 'Maximum Water Allowed',
+    bulkingTitle: 'Bulking of Sand (Fine Aggregate) Correction',
+    bulkingExplain: 'Dry sand volume increases by 15% to 30% due to surface moisture tension. Always increase sand volume in box batching!',
+    sandBulkingPercent: 'Field Measured Bulking (%)',
+    farmaname: 'Measuring Box (Thaggi / Farma Box): 300 × 300 × 380 mm = 35 Litres (1 Bag Cement Volume)',
+
+    // Standards Tab
+    standardsTitle: 'IS 456:2000 & IS 10262:2019 Ready Reference',
+    cubeStrengthTitle: 'Cube Compressive Strength Acceptance (IS 456 Clause 16.1 & Table 11)',
+    cubeTest1: 'Test 1 (N/mm²)',
+    cubeTest2: 'Test 2 (N/mm²)',
+    cubeTest3: 'Test 3 (N/mm²)',
+    cubeTest4: 'Test 4 (N/mm²)',
+    checkCompliance: 'Verify Sample Compliance',
+    strippingTitle: 'Formwork Stripping Minimum Time (IS 456 Clause 11.3)',
+
+    // BOQ Tab
+    boqTitle: 'Concrete Quantity & Material Estimator',
+    concreteVolume: 'Total Concrete Volume Needed (m³)',
+    cementPrice: 'Cement Price per 50kg Bag (₹)',
+    sandPrice: 'Sand Price per Unit / Ton (₹)',
+    aggPrice: 'Aggregate Price per Ton (₹)',
+    admixPrice: 'Admixture Price per Liter (₹)',
+    totalCostEst: 'Total Material Cost Estimate',
+  },
+  ta: {
+    appTitle: 'கான்கிரீட் மிக்ஸ் டிசைன் ப்ரோ',
+    appSubtitle: 'IS 10262:2019 & IS 456:2000 வழிகாட்டுதல்கள்',
+    tagline: 'இந்திய தரநிலைகளுக்கான துல்லியமான கான்கிரீட் கலவை கணக்கீடு',
+    tabDesignMix: 'டிசைன் மிக்ஸ்',
+    tabScc: 'SCC கான்கிரீட்',
+    tabLab: 'சரிவு அனிமேஷன்',
+    tabNominalMix: 'நாமினல் மிக்ஸ்',
+    tabFieldAdj: 'ஈரப்பத திருத்தம்',
+    tabStandards: 'IS குறியீடுகள்',
+    tabBoq: 'மூலப்பொருள் & செலவு',
+
+    // Design Mix Form
+    sectionStipulations: '1. கலவை தேவைகள் (Stipulations)',
+    sectionMaterials: '2. பொருட்கள் சோதனை தகவல்',
+    sectionMineral: '3. தாது சேர்க்கைகள் (Fly Ash / GGBS)',
+    sectionChemical: '4. வேதியியல் ரசாயனம் (Admixture)',
+    sectionAggregates: '5. ஜல்லி மற்றும் மணல் விவரங்கள்',
+
+    grade: 'கான்கிரீட் தரம் (Grade)',
+    concreteType: 'கட்டமைப்பு வகை (RCC / PCC)',
+    cementType: 'சிமெண்ட் வகை & தரம்',
+    exposure: 'சுற்றுச்சூழல் நிலை (Exposure)',
+    maxAggSize: 'ஜல்லியின் அதிகபட்ச அளவு (MSA)',
+    aggShape: 'ஜல்லியின் வடிவம் (Shape)',
+    sandZone: 'மணல் மண்டலம் (Sand Zone)',
+    workability: 'சரிவு அளவு (Slump mm)',
+    placingMethod: 'கான்கிரீட் போடும் முறை',
+    siteControl: 'தள மேற்பார்வை தரம்',
+    customStdDev: 'தள திட்ட விலக்கம் (Standard Deviation)',
+
+    cementSg: 'சிமெண்டின் ஒப்படர்த்தி (Specific Gravity)',
+    caSg: 'ஜல்லியின் ஒப்படர்த்தி (SSD Specific Gravity)',
+    faSg: 'மணலின் ஒப்படர்த்தி (SSD Specific Gravity)',
+    caAbsorption: 'ஜல்லி நீர் உறிஞ்சுதல் (%)',
+    faAbsorption: 'மணல் நீர் உறிஞ்சுதல் (%)',
+    caMoisture: 'ஜல்லி மேற்பரப்பு ஈரப்பதம் (%)',
+    faMoisture: 'மணல் மேற்பரப்பு ஈரப்பதம் (%)',
+    coarseFraction: '20-10 மிமீ ஜல்லி பங்கு விகிதம்',
+
+    mineralType: 'தாது சேர்க்கை வகை (Mineral)',
+    mineralPercent: 'சிமெண்ட் மாற்று சதவீதம் (%)',
+    mineralSg: 'தாதுவின் ஒப்படர்த்தி (Specific Gravity)',
+    cementitiousIncrease: 'சிமெண்ட் கலவை அளவு அதிகரிப்பு (%)',
+
+    useAdmix: 'வேதியியல் சேர்க்கை (சூப்பர்பிளாஸ்டிசைசர்)',
+    admixReduction: 'நீர் குறைப்பு சதவீதம் (%)',
+    admixDosage: 'ரசாயன அளவு (%)',
+    admixSg: 'ரசாயனத்தின் ஒப்படர்த்தி',
+
+    // Results
+    resultsTitle: '1 கன மீட்டர் (m³) கான்கிரீட்டிற்கான அளவு',
+    targetStrength: 'இலக்கு அமுக்க வலிமை (Target f\'ck)',
+    waterCementRatio: 'நீர்-சிமெண்ட் விகிதம் (w/c)',
+    netWater: 'தேவையான நிகர நீர் (Net Water)',
+    cementQuantity: 'சிமெண்ட் அளவு (OPC)',
+    mineralQuantity: 'தாது கலவை (Fly Ash / GGBS)',
+    fineAggQuantity: 'மணல் அளவு (Sand - SSD)',
+    coarseAggQuantity: 'ஜல்லி அளவு (Coarse Aggregate - SSD)',
+    admixtureQuantity: 'ரசாயன கலவை (Admixture)',
+    ratioDisplay: 'கலவை விகிதம் (சிமெண்ட் : மணல் : ஜல்லி)',
+
+    fieldAdjustedResults: 'தள ஈரப்பத திருத்தப்பட்ட அளவுகள் (Field Batch)',
+    actualWaterBatch: 'மிக்ஸரில் ஊற்ற வேண்டிய நீர்',
+    actualFaBatch: 'எடை போட வேண்டிய மணல் (Wet Sand)',
+    actualCaBatch: 'எடை போட வேண்டிய ஜல்லி (Wet Gravel)',
+    moistureNotice: 'மணல் மற்றும் ஜல்லியில் உள்ள ஈரப்பதம் நீக்கப்பட்டு சேர்க்கப்படும் நீர் குறைக்கப்பட்டுள்ளது.',
+
+    // Buttons
+    btnCalculate: 'மறு கணக்கீடு செய்',
+    btnExportReport: 'அறிக்கை அச்சிடு / சேமி (PDF)',
+    btnCopyRatio: 'விகிதத்தை நகலெடு',
+    btnLoadPreset: 'குறியீட்டு முன்னமைவுகள்',
+    viewFrameToggle: 'மொபைல் சட்டகம் மாற்று',
+
+    // Durability badges
+    durabilityOk: 'IS 456 அட்டவணை 5 நீடித்துழைப்பு விதிகள் சரிபார்க்கப்பட்டது',
+    cementMinWarning: 'குறைந்தபட்ச சிமெண்ட் அளவுக்கு ஏற்ப கலவை அதிகரிக்கப்பட்டுள்ளது.',
+    cementMaxWarning: 'கவனம்: சிமெண்ட் அளவு 450 kg/m³ அளவுக்கு மேல் உள்ளது.',
+
+    // Nominal Mix
+    nominalTitle: 'நாமினல் மிக்ஸ் கான்கிரீட் (IS 456:2000 அட்டவணை 9)',
+    nominalSubtitle: 'M5 முதல் M20 வரையிலான பொது மற்றும் குடியிருப்பு பணிகள்',
+    selectNominalGrade: 'நாமினல் தரத்தை தேர்வு செய்க',
+    nominalBagBasis: '1 மூட்டை (50 கிலோ) சிமெண்டிற்கான மூலப்பொருட்கள்',
+    totalDryAgg: 'மொத்த உலர் ஜல்லி & மணல்',
+    waterPerBag: 'அனுமதிக்கப்பட்ட அதிகபட்ச நீர்',
+    bulkingTitle: 'மணல் உப்பல் திருத்தம் (Bulking of Sand)',
+    bulkingExplain: 'ஈரப்பதம் காரணமாக மணல் 15% முதல் 30% வரை உப்பும். பெட்டி அளவீட்டில் மணலின் அளவை அதிகரிக்க வேண்டும்!',
+    sandBulkingPercent: 'தளத்தில் அளக்கப்பட்ட உப்பல் (%)',
+    farmaname: 'அளவீட்டு பெட்டி (ஃபர்மா பாக்ஸ்): 300 × 300 × 380 மிமீ = 35 லிட்டர் (1 மூட்டை சிமெண்ட் கொள்ளளவு)',
+
+    // Standards Tab
+    standardsTitle: 'IS 456 & IS 10262 பொறியியல் குறிப்பேடு',
+    cubeStrengthTitle: 'கியூப் வலிமை உறுதிப்பாடு (IS 456 Table 11 Compliance)',
+    cubeTest1: 'மாதிரி 1 (N/mm²)',
+    cubeTest2: 'மாதிரி 2 (N/mm²)',
+    cubeTest3: 'மாதிரி 3 (N/mm²)',
+    cubeTest4: 'மாதிரி 4 (N/mm²)',
+    checkCompliance: 'ஏற்புத்தன்மை சரிபார்',
+    strippingTitle: 'தட்டு பலகை அகற்றும் காலம் (IS 456 Clause 11.3)',
+
+    // BOQ Tab
+    boqTitle: 'தள தேவைகள் & செலவு மதிப்பீடு',
+    concreteVolume: 'தேவையான மொத்த கான்கிரீட் அளவு (m³)',
+    cementPrice: 'சிமெண்ட் மூட்டை விலை (₹)',
+    sandPrice: 'மணல் யூனிட் அல்லது டன் விலை (₹)',
+    aggPrice: 'ஜல்லி டன் விலை (₹)',
+    admixPrice: 'ரசாயன விலை லிட்டருக்கு (₹)',
+    totalCostEst: 'மதிப்பிடப்பட்ட மொத்த மூலப்பொருள் செலவு',
+  },
+};
